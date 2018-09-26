@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Meta -->
+    <meta charset="UTF-8">
+    <!-- maximum-scale=1.0 is now deprecated -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Martin aurelien">
+    <meta name="description" content="Rsbat une équipe d'expert a votre ecoute">
+    <meta name="keywords" content="rsbat, batiment, rénovation, carrelage, platrerie, salle de bain, Hem">
+    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
+
+    <title>Rs.Bat</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ asset('asset/css/bootstrap/bootstrap.min.css') }}" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="{{ asset('asset/css/font-awesome/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ asset('asset/css/style.css') }}" rel="stylesheet">
+    {% block stylesheets %}
+    {% endblock %}
+
+    <link rel="icon" type="image/x-icon" href="??" />
+
+</head>
+<body>
+<header>
+    {% block header %}
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
+            <div class="container-fluid">
+                <a class="navbar-brand js-scroll-trigger" href="">Logo</a>
+                <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu
+                    <i class="fa fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="">Carte grise</a>
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="">Changement d'adresse</a>
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="">Quitus fiscal</a>
+                        </li>
+                        <li class="nav-item mx-0 mx-lg-1">
+                            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="">Immatriculation provisoire</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    {% endblock %}
+</header>
+{% block body %}
+{% endblock %}
+
+{% block footer %}
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4 mb-5 mb-lg-0">
+                    <h4 class="text-uppercase mb-4">Contact</h4>
+                    <p class="lead mb-0"><i class="fa fa-map-marker"></i> Adresse postale
+                        <br>code postale, ville</p>
+                    <p class="lead mb-0"><i class="fa fa-at"></i> email@email.com</p>
+                    <p class="lead mb-0"><i class="fa fa-phone"></i> Télephone</p>
+                </div>
+                <div class="col-md-3 mb-5 mb-lg-0">
+                    <h4 class="text-uppercase mb-4">Suivez-Nous</h4>
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="http://www.facebook.com/bast.rsbat">
+                                <i class="fa fa-fw fa-facebook"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-5">
+                    <h4 class="text-uppercase mb-4">Localisation</h4>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2529.17973249859!2d3.19968791558288!3d50.660923380058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c327df2e4be83d%3A0x1c7a92aaf30bc020!2s1+Rue+de+la+Blanchisserie%2C+59510+Hem!5e0!3m2!1sfr!2sfr!4v1535973457219" width="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="copyright py-4 text-center text-white">
+        <div class="container">
+            <small><a href="??">Mentions Légales</a></small>
+        </div>
+    </div>
+{% endblock %}
+
+
+<!-- Bootstrap core JavaScript -->
+<script src="{{ asset('asset/js/jquery/jquery.min.js') }}"></script>
+<script src="{{ asset('asset/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
+
+<!-- Custom scripts for this template -->
+<script src="{{ asset('asset/js/freelancer.js') }}"></script>
+
+{% block javascripts %}
+{% endblock %}
+</body>
+</html>
