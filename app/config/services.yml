@@ -33,3 +33,7 @@ services:
     # AppBundle\Service\ExampleService:
     #     arguments:
     #         $someArgument: 'some_value'
+
+    AppBundle\Service\FileUploaderService:
+        arguments:
+            $targetDirectory: '%kernel.project_dir%/web/%pdf_directory%'
