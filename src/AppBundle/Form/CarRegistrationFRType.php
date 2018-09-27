@@ -4,13 +4,12 @@ namespace AppBundle\Form;
 use AppBundle\Entity\Document;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class DocumentType extends AbstractType
+class CarRegistrationFRType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -31,20 +30,56 @@ class DocumentType extends AbstractType
                             "Mme" => "Mme",
                             "Mlle" => "Mlle"
                         ]
-                ]
-            )
+                ])
             ->add('lastName', TextType::class)
             ->add('firstName', TextType::class)
             ->add('phoneNumber', TextType::class)
             ->add('email', TextType::class)
+            ->add('licenseDriver', FileType::class,
+                [
+                    'required' => true,
+                    'data_class' => null,
+                    'multiple' => true
+                ])
+            ->add('idCard', FileType::class,
+                [
+                    'required' => true,
+                    'data_class' => null,
+                    'multiple' => true
+                ])
+            ->add('controlT', FileType::class,
+                [
+                    'required' => true,
+                ])
+            ->add('immatRequest', FileType::class,
+                [
+                    'required' => true,
+                ])
+            ->add('mandat', FileType::class,
+                [
+                    'required' => true,
+                ])
+            ->add('domJustify', FileType::class,
+                [
+                    'required' => true,
+                    'data_class' => null,
+                    'multiple' => true
+                ])
+            ->add('insuranceCertificate', FileType::class,
+                [
+                    'required' => true,
+                ])
+            ->add('transferOrSales', FileType::class,
+                [
+                    'required' => true,
+                ])
             ->add('carRegistration', FileType::class,
-            [
-                'required' => true,
-                'data_class' => null,
-                'multiple' => true
-            ]
-            )
-        ;
+                [
+                    'required' => true,
+                    'data_class' => null,
+                    'multiple' => true
+                ]
+            );
     }
 
 

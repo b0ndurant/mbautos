@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Documents list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Civility</th>
+                <th>Lastname</th>
+                <th>Firstname</th>
+                <th>Phonenumber</th>
+                <th>Email</th>
+                <th>Price</th>
+                <th>Pricetoken</th>
+                <th>Type</th>
+                <th>Licensedriver</th>
+                <th>Idcard</th>
+                <th>Controlt</th>
+                <th>Immatrequest</th>
+                <th>Mandat</th>
+                <th>Domjustify</th>
+                <th>Insurancecertificate</th>
+                <th>Transferorsales</th>
+                <th>Ueconformity</th>
+                <th>Quitus</th>
+                <th>Carregistration</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for document in documents %}
+            <tr>
+                <td><a href="{{ path('document_show', { 'id': document.id }) }}">{{ document.id }}</a></td>
+                <td>{{ document.civility }}</td>
+                <td>{{ document.lastName }}</td>
+                <td>{{ document.firstName }}</td>
+                <td>{{ document.phoneNumber }}</td>
+                <td>{{ document.email }}</td>
+                <td>{{ document.price }}</td>
+                <td>{{ document.priceToken }}</td>
+                <td>{{ document.type }}</td>
+                <td>{% if document.licenseDriver %}{{ document.licenseDriver|join(', ') }}{% endif %}</td>
+                <td>{% if document.idCard %}{{ document.idCard|join(', ') }}{% endif %}</td>
+                <td>{{ document.controlT }}</td>
+                <td>{{ document.immatRequest }}</td>
+                <td>{{ document.mandat }}</td>
+                <td>{% if document.domJustify %}{{ document.domJustify|join(', ') }}{% endif %}</td>
+                <td>{{ document.insuranceCertificate }}</td>
+                <td>{{ document.transferOrSales }}</td>
+                <td>{% if document.ueConformity %}{{ document.ueConformity|join(', ') }}{% endif %}</td>
+                <td>{{ document.quitus }}</td>
+                <td>{% if document.carRegistration %}{{ document.carRegistration|join(', ') }}{% endif %}</td>
+                <td>{{ document.status }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('document_show', { 'id': document.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('document_edit', { 'id': document.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('document_new') }}">Create a new document</a>
+        </li>
+    </ul>
+{% endblock %}
