@@ -147,6 +147,10 @@ class Document
      */
     private $carRegistration;
 
+    public function getName()
+    {
+        return $this->getCivility().' '.$this->getLastName(). ' '.$this->getFirstName();
+    }
 
     /**
      * Get id.

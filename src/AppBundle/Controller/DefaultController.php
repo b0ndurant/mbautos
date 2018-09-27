@@ -39,7 +39,7 @@ class DefaultController extends Controller
             $filename = [];
 
             foreach ($document->getCarRegistration() as $file) {
-                $filename[] = $fileUploaderService->upload($file, $document->getLastName());
+                $filename[] = $fileUploaderService->upload($file, $document->getName());
             }
             $document->setCarRegistration($filename);
             $this->getDoctrine()->getManager()->persist($document);
