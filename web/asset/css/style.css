@@ -1,154 +1,166 @@
-body {
-    font-family: 'Lato';
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-weight: 700;
-    font-family: 'Montserrat';
-}
-
 /*-- CSS NAVBAR --*/
-#mainNav {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
+.navbar-custom {
+    margin-bottom: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+    font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: black;
+}
+.navbar-custom .navbar-toggle {
+    color: red;
+    background-color: rgba(255, 255, 255, 0.2);
+    font-size: 12px;
+}
+.navbar-custom .navbar-toggle:focus,
+.navbar-custom .navbar-toggle:active {
+    outline: none;
+}
+.navbar-custom .navbar-brand {
     font-weight: 700;
-    font-family: 'Montserrat';
 }
-
-#mainNav .navbar-brand {
-    color: #BA0A43;
+.navbar-custom .navbar-brand:focus {
+    outline: none;
 }
-
-#mainNav .navbar-nav {
-    margin-top: 1rem;
-    letter-spacing: 0.0625rem;
+.navbar-custom a {
+    color: black;
 }
-
-#mainNav .navbar-nav li.nav-item a.nav-link {
-    color: #fff;
+.top-nav-collapse a {
+    color: red;
 }
-
-#mainNav .navbar-nav li.nav-item a.nav-link:hover {
-    color: #BA0A43;
+.navbar-custom .nav li a {
+    -webkit-transition: background 0.3s ease-in-out;
+    -moz-transition: background 0.3s ease-in-out;
+    transition: background 0.3s ease-in-out;
 }
-
-#mainNav .navbar-nav li.nav-item a.nav-link:active, #mainNav .navbar-nav li.nav-item a.nav-link:focus {
-    color: #BA0A43;
+.navbar-custom .nav li a:hover {
+    color: rgba(255, 255, 255, 0.8);
+    outline: none;
+    background-color: transparent;
 }
-
-#mainNav .navbar-nav li.nav-item a.nav-link.active {
-    color: #18BC9C;
+.navbar-custom .nav li a:focus,
+.navbar-custom .nav li a:active {
+    outline: none;
+    background-color: transparent;
 }
-
-#mainNav .navbar-toggler {
-    font-size: 80%;
-    padding: 0.8rem;
+.navbar-custom .nav li.active {
+    outline: none;
 }
-
-@media (min-width: 992px) {
-    #mainNav {
-        padding-top: 1.5rem;
-        padding-bottom: 1.5rem;
-        -webkit-transition: padding-top 0.3s, padding-bottom 0.3s;
-        -moz-transition: padding-top 0.3s, padding-bottom 0.3s;
-        transition: padding-top 0.3s, padding-bottom 0.3s;
+.navbar-custom .nav li.active a {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+.navbar-custom .nav li.active a:hover {
+    color: white;
+}
+@media (min-width: 990px) {
+    .navbar-custom {
+        padding: 20px 0;
+        border-bottom: none;
+        letter-spacing: 1px;
+        background: transparent;
+        -webkit-transition: background 0.5s ease-in-out, padding 0.5s ease-in-out;
+        -moz-transition: background 0.5s ease-in-out, padding 0.5s ease-in-out;
+        transition: background 0.5s ease-in-out, padding 0.5s ease-in-out;
     }
-    #mainNav .navbar-brand {
-        font-size: 2em;
-        -webkit-transition: font-size 0.3s;
-        -moz-transition: font-size 0.3s;
-        transition: font-size 0.3s;
+
+    .navbar-custom.top-nav-collapse {
+        padding: 0;
+        background: black;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     }
-    #mainNav .navbar-nav {
-        margin-top: 0;
+
+}
+
+@media (max-width: 990px) {
+    .navbar-header {
+        float: none;
     }
-    #mainNav .navbar-nav > li.nav-item > a.nav-link.active {
-        color: #BA0A43;
-        background: #18BC9C;
+    .navbar-toggle {
+        display: block;
     }
-    #mainNav .navbar-nav > li.nav-item > a.nav-link.active:active, #mainNav .navbar-nav > li.nav-item > a.nav-link.active:focus, #mainNav .navbar-nav > li.nav-item > a.nav-link.active:hover {
-        color: #fff;
-        background: #18BC9C;
+    .navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
     }
-    #mainNav.navbar-shrink {
-        padding-top: 0.5rem;
-        padding-bottom: 0.5rem;
+    .navbar-collapse.collapse {
+        display: none!important;
     }
-    #mainNav.navbar-shrink .navbar-brand {
-        font-size: 1.5em;
+    .navbar-nav {
+        float: none!important;
+        margin: 7.5px -15px;
+    }
+    .navbar-nav>li {
+        float: none;
+    }
+    .navbar-nav>li>a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .navbar-custom a {
+        color: red;
     }
 }
 
 /*-- END CSS NAVBAR --*/
 
-/*-- CSS FOOTER --*/
+/*----------- FOOTER ------------*/
 
 .footer {
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
-    background-color: black;
-    color: #fff;
+    background: #999;
+    height: auto;
+    position: relative;
+    width: 100%;
+    border-bottom: 1px solid #CCCCCC;
+    border-top: 1px solid #DDDDDD;
 }
 
-.copyright {
-    background-color: #090b0c;
+.footer p, .copyrights span {
+    color: white;
+}
+
+.footer .copyrights .visit {
+    float: right;
+}
+
+.footer .logo_footer img {
+    width: 20vw;
+}
+.footer h3 {
+    border-bottom: 1px solid #BAC1C8;
+    color: #1c4058;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 27px;
+    padding: 30px 0 10px;
+    text-transform: uppercase;
+}
+
+.footer map h3 {
+    border-bottom: 0;
+}
+
+.footer .social i {
+    font-size: 44px;
+}
+
+footer .copyrights {
+    padding-top: 20px;
+    background: #777;
+}
+
+footer .copyrights a {
+    color: #1c4058;
+}
+
+@media (max-width: 767px) {
+    .logo_footer{
+        text-align: center;
+    }
+    .footer .logo_footer img {
+        width: 60%;
+    }
+    .footer .copyrights .visit {
+        float: none;
+    }
 }
 
 /*-- END CSS FOOTER --*/
-
-a {
-    color: #BA0A43;
-}
-
-a:focus, a:hover, a:active {
-    color: #128f76;
-}
-
-.btn {
-    border-width: 2px;
-}
-
-.bg-primary {
-    background-color: black !important;
-}
-
-.bg-secondary {
-    background-color: #090b0c !important;
-}
-
-.text-primary {
-    color: #18BC9C !important;
-}
-
-.text-secondary {
-    color: black !important;
-}
-
-.text-red {
-    color: #C80045;
-}
-
-.btn-primary {
-    background-color: #18BC9C;
-    border-color: #18BC9C;
-}
-
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
-    background-color: #128f76;
-    border-color: #128f76;
-}
-
-.btn-secondary {
-    background-color: #2C3E50;
-    border-color: #2C3E50;
-}
-
-.btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active {
-    background-color: #1a252f;
-    border-color: #1a252f;
-}

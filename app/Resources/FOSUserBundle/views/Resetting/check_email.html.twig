@@ -1,0 +1,10 @@
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('asset/img/Logo.jpg') }}">
+    <p>
+{{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
+</p>
+    <a href="{{ path('homepage') }}">Retourner sur le site web</a>
+{% endblock %}

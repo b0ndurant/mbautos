@@ -1,0 +1,35 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<link rel="stylesheet" href="{{ asset('asset/css/bootstrap/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ asset('asset/css/login.css') }}">
+
+<link rel="shortcut icon" type="image/x-icon" href="{{ asset('asset/img/Logo.jpg') }}">
+
+
+{% block fos_user_content %}
+    <form action="{{ path("fos_user_security_check") }}" method="post" class="form-signin">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+        <div class="login-container">
+            <h1>Login</h1><br>
+            <form>
+                <label for="username">{{ 'security.login.username'|trans }}</label>
+                <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+                <label for="password">{{ 'security.login.password'|trans }}</label>
+                <input type="password" id="password" name="_password" required="required" />
+                <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                <input type="submit" class="login login-submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+            </form>
+            <div class="login-help">
+                <a href="{{ path('fos_user_resetting_request') }}">mot de passe oublier</a></br>
+                <a href="{{ path('homepage') }}">retourner sur le site web</a>
+            </div>
+        </div>
+    </form>
+{% endblock fos_user_content %}
+
+<script src="{{ asset('asset/css/font-awesome/font-awesome.min.css') }}"></script>
+
