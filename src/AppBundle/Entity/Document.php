@@ -71,6 +71,13 @@ class Document
     private $priceToken;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=64)
+     */
+    private $type;
+
+    /**
      * @var array|null
      *
      * @ORM\Column(name="licenseDriver", type="array", nullable=true)
@@ -146,6 +153,18 @@ class Document
      * @ORM\Column(name="CarRegistration", type="array")
      */
     private $carRegistration;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="status", type="integer")
+     */
+    private $status;
+
+    public function __construct()
+    {
+        $this->getStatus(0);
+    }
 
     public function getName()
     {
@@ -448,5 +467,53 @@ class Document
     public function setCarRegistration($carRegistration)
     {
         $this->carRegistration = $carRegistration;
+    }
+
+    /**
+     * Set type.
+     *
+     * @param string $type
+     *
+     * @return Document
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type.
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set status.
+     *
+     * @param int $status
+     *
+     * @return Document
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status.
+     *
+     * @return int
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

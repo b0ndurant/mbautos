@@ -38,7 +38,7 @@ class AdminController extends Controller
         $dir = scandir($this->getParameter('targetDirectory').'/'.$document->getName());
         unset($dir[0],$dir[1]);
         foreach ($dir as $file) {
-            $zip->addFile($this->getParameter('targetDirectory').'/'.$document->getName().'/'.$file,'file.png');
+            $zip->addFile($this->getParameter('targetDirectory').'/'.$document->getName().'/'.$file, $file);
         }
         $zip->close();
 
