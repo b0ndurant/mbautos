@@ -22,6 +22,55 @@ class Document
     private $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="Civility", type="string", length=8)
+     */
+    private $civility;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="LastName", type="string", length=32)
+     */
+    private $lastName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="FirstName", type="string", length=32)
+     */
+    private $firstName;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="PhoneNumber", type="string", length=16)
+     */
+    private $phoneNumber;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="Email", type="string", length=64)
+     */
+    private $email;
+
+    /**
+     * @var float|null
+     *
+     * @ORM\Column(name="Price", type="float", nullable=true)
+     */
+    private $price;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="PriceToken", type="string", length=128, nullable=true)
+     */
+    private $priceToken;
+
+    /**
      * @var array|null
      *
      * @ORM\Column(name="licenseDriver", type="array", nullable=true)
@@ -107,6 +156,118 @@ class Document
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCivility()
+    {
+        return $this->civility;
+    }
+
+    /**
+     * @param string $civility
+     */
+    public function setCivility($civility)
+    {
+        $this->civility = $civility;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param string $lastName
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param string $firstName
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * @param string $phoneNumber
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param float|null $price
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPriceToken()
+    {
+        return $this->priceToken;
+    }
+
+    /**
+     * @param null|string $priceToken
+     */
+    public function setPriceToken($priceToken)
+    {
+        $this->priceToken = $priceToken;
     }
 
     /**

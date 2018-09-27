@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: julien
- * Date: 26/09/18
- * Time: 20:19
- */
-
 namespace AppBundle\Service;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -13,31 +6,42 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class FileUploaderService
 {
     private $_targetDirectory;
-    private $_nameCanonical;
 
     public function __construct($targetDirectory)
     {
         $this->_targetDirectory = $targetDirectory;
     }
 
-    public function upload(UploadedFile $file, $type, $name)
+    public function upload(UploadedFile $file, $name)
     {
-        $fileName = $this->setNameCanonical(
-                $file->getClientOriginalExtension(), $file->getClientOriginalName()
-            ) . '_' . md5(uniqid()) . '.' . $file->guessExtension();
+        $fileName =  $file->getClientOriginalName();
 
-        $file->move($this->getTargetDirectory($type, $name), $fileName);
+        $file->move($this->getTargetDirectory($name), $fileName);
 
         return $fileName;
     }
 
     /**
-     * @param $type
-     * @param $name
+     * @param $name|null
      * @return mixed
      */
-    public function getTargetDirectory($type, $name)
+    public function getTargetDirectory($name = null)
     {
-        return $this->_targetDirectory.'/'.$type.'/'.$name;
+        return $this->_targetDirectory.'/'.$name;
+    }
+
+    public function deletePdf($name)
+    {
+        $dir = $this->getTargetDirectory($name);
+        if (is_dir($dir)) { // si le paramètre est un dossier
+        $objects = scandir($dir); // on scan le dossier pour récupérer ses objets
+        foreach ($objects as $object) { // pour chaque objet
+            if ($object != "." && $object != "..") { // si l'objet n'est pas . ou ..
+                if (filetype($dir."/".$object) == "dir") rmdir($dir."/".$object);else unlink($dir."/".$object); // on supprime l'objet
+            }
+        }
+        reset($objects); // on remet à 0 les objets
+        rmdir($dir); // on supprime le dossier
+    }
     }
 }

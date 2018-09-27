@@ -36,4 +36,9 @@ services:
 
     AppBundle\Service\FileUploaderService:
         arguments:
-            $targetDirectory: '%kernel.project_dir%/web/%pdf_directory%'
+            $targetDirectory: '%kernel.project_dir%/web/uploads'
+
+    AppBundle\EventListener\FileUploadListener:
+        tags:
+        - { name: doctrine.event_listener, event: prePersist }
+        - { name: doctrine.event_listener, event: preUpdate }
