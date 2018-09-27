@@ -13,6 +13,8 @@
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
 /vendor/
+<<<<<<< HEAD
 .idea
 *.php~
 .directory
+/web/uploads/
