@@ -80,6 +80,7 @@ class DefaultController extends Controller
                 $carRegistration[] = $fileUploaderService->upload($file, $document->getName());
             }
             $document->setCarRegistration($carRegistration);
+            $document->setType('cg_fr');
 
             $this->getDoctrine()->getManager()->persist($document);
             $this->getDoctrine()->getManager()->flush();

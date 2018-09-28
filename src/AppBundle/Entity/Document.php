@@ -163,7 +163,7 @@ class Document
 
     public function __construct()
     {
-        $this->getStatus(0);
+        $this->setStatus(0);
     }
 
     public function getName()

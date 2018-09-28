@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link href="{{ asset('asset/css/index.css') }}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+    <div style="margin-top: 80px"></div>
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+    <button type="submit">Envoyer</button>
+    {{ form_end(form) }}
+
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('asset/js/index.js') }}"></script>
+
+{% endblock %}
