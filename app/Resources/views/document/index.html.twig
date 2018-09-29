@@ -33,7 +33,7 @@
                     {% if document.price is null %}
                         <td>0 €</td>
                     {% else %}
-                        <td>{{ document.price }}</td>
+                        <td>{{ document.price }} €</td>
                     {% endif %}
                     <td>{{ document.type }} €</td>
                     <td>
@@ -48,7 +48,11 @@
                                class="button button-green text-center">Validé</a>
                         {% endif %}
                     </td>
-                    <td><a href="{{ path('document_show', { 'id': document.id }) }}">voir</a></td>
+                    <td>
+                        <a href="#" class="fas fa-euro-sign" style="font-size: 20px; color: #999999" data-toggle="modal" data-target="#pop-up-price-document-{{ document.id }}" title="Modifier le montant demandé">€</a>
+                        {{ render(controller("AppBundle:Admin:price", {'document': document})) }}
+                        <a href="{{ path('document_show', { 'id': document.id }) }}">voir</a>
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>

@@ -317,8 +317,7 @@ class DefaultController extends Controller
      *
      * $data function to send email
      *
-     * @param string int array $data function send email
-     *
+     * @param Document $document
      * @return string int array
      */
     private function _sendEmail(Document $document)

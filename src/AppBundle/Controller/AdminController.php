@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Document;
+use AppBundle\Form\PriceType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -111,6 +112,49 @@ class AdminController extends Controller
         }
         return $this->redirectToRoute(
             'list'
+        );
+    }
+
+    /**
+     * set Price for request.
+     *
+     * @param Request $request New posted info
+     * @param Document $document The contract entity
+     *
+     * @throws \Exception
+     *
+     * @Route("/{document}/price",
+     *     methods={"POST"}, name="price")
+     *
+     * @return Response
+     *
+     */
+    public function priceAction(Request $request, Document $document)
+    {
+        $form = $this->createForm(PriceType::class);
+        $form->handleRequest($request);
+
+        // Var for the file name
+        if ($form->isSubmitted() && $form->isValid()) {
+            $document->setPrice(
+                $request->get("appbundle_document")['price']
+            );
+            $token = rtrim(strtr(base64_encode(random_bytes(32)), '+/', '-_'), '=');
+            $document->setPriceToken($token);
+            $this->getDoctrine()->getManager()->persist($document);
+            $this->getDoctrine()->getManager()->flush();
+
+            $url = $this->generateUrl('paiement', array('token' => $token));
+
+            return $this->redirectToRoute('list');
+        }
+
+        return $this->render(
+            'default/_price.html.twig',
+            [
+                'form' => $form->createView(),
+                'document' => $document
+            ]
         );
     }
 }
