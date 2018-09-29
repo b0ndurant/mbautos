@@ -27,47 +27,50 @@
     <link rel="icon" type="image/x-icon" href="??" />
 
 </head>
-<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
-<header>
+<body>
+<header id="header">
     {% block header %}
-        <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
-                        Menu <i class="fa fa-bars"></i>
-                    </button>
-                    <a class="navbar-brand page-scroll" href="#page-top">
-                        <i class="fa fa-play-circle"></i> <span class="light">Start</span> Bootstrap
-                    </a>
-                </div>
+        <!-- Nav -->
+        <div class="container-fluid">
 
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
-                    <ul class="nav navbar-nav">
-                        <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
-                        <li class="hidden">
-                            <a href="#page-top"></a>
-                        </li>
-                        <li>
-                            <a class="page-scroll" href="#about">Acceuil</a>
-                        </li>
-                        <li>
-                            <a class="page-scroll" href="#download">Demande carte grise</a>
-                        </li>
-                        <li>
-                            <a class="page-scroll" href="#contact">Changement d'adresse</a>
-                        </li>
-                        <li>
-                            <a class="page-scroll" href="#contact">Quitus fiscal</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.navbar-collapse -->
+            <div id="logo" class="pull-left">
+                <h1><a href="#intro" class="scrollto">Logo</a></h1>
+                <!-- Uncomment below if you prefer to use an image logo -->
+                <!-- <a href="#intro"><img src="img/logo.png" alt="" title="" /></a>-->
             </div>
-            <!-- /.container -->
-        </nav>
+
+            <nav id="nav-menu-container">
+                <ul class="nav-menu">
+                    <li class="menu-active"><a href="{{ path('homepage') }}">Acceuil</a></li>
+                    <li class="menu-has-children"><a href="#">Demande de carte grise</a>
+                        <ul>
+                            <li><a href="{{ path('carRegistrationFR') }}">Demande de carte gris française</a></li>
+                            <li><a href="{{ path('carRegistrationUE') }}">Demande de carte grise étrangère</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{{ path('adressChange') }}">Changement d'adresse</a></li>
+                    <li><a href="{{ path('quitus') }}">Quitus fiscal</a></li>
+                    <li><a href="{{ path('plate') }}">Plaque immatriculation</a></li>
+                </ul>
+            </nav><!-- #nav-menu-container -->
+        </div>
+        <!-- /Nav -->
     {% endblock %}
 </header>
+<!-- Display all flash message -->
+{% if app.flashes is defined %}
+    <div class="position-fixed">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }} fade in alert-custom">
+                    {{ message|raw }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endif %}
+
 {% block body %}
 {% endblock %}
 <footer>
@@ -109,6 +112,7 @@
 <!-- Bootstrap core JavaScript -->
 <script src="{{ asset('asset/js/jquery/jquery.min.js') }}"></script>
 <script src="{{ asset('asset/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('asset/js/superfish/superfish.min.js') }}"></script>
 
 <!-- Custom scripts for this template -->
 <script src="{{ asset('asset/js/main.js') }}"></script>

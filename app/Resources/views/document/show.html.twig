@@ -1,108 +1,124 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseAdmin.html.twig' %}
 
 {% block body %}
-    <h1>Document</h1>
+    <div class="container">
+    <h1>Demande de {{ document.Type }}</h1>
 
     <table>
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ document.id }}</td>
-            </tr>
-            <tr>
-                <th>Civility</th>
-                <td>{{ document.civility }}</td>
-            </tr>
-            <tr>
-                <th>Lastname</th>
-                <td>{{ document.lastName }}</td>
-            </tr>
-            <tr>
-                <th>Firstname</th>
-                <td>{{ document.firstName }}</td>
-            </tr>
-            <tr>
-                <th>Phonenumber</th>
-                <td>{{ document.phoneNumber }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ document.email }}</td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ document.price }}</td>
-            </tr>
-            <tr>
-                <th>Pricetoken</th>
-                <td>{{ document.priceToken }}</td>
-            </tr>
-            <tr>
-                <th>Type</th>
-                <td>{{ document.type }}</td>
-            </tr>
-            <tr>
-                <th>Licensedriver</th>
-                <td>{% if document.licenseDriver %}{{ document.licenseDriver|join(', ') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Idcard</th>
-                <td>{% if document.idCard %}{{ document.idCard|join(', ') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Controlt</th>
-                <td>{{ document.controlT }}</td>
-            </tr>
-            <tr>
-                <th>Immatrequest</th>
-                <td>{{ document.immatRequest }}</td>
-            </tr>
-            <tr>
-                <th>Mandat</th>
-                <td>{{ document.mandat }}</td>
-            </tr>
-            <tr>
-                <th>Domjustify</th>
-                <td>{% if document.domJustify %}{{ document.domJustify|join(', ') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Insurancecertificate</th>
-                <td>{{ document.insuranceCertificate }}</td>
-            </tr>
-            <tr>
-                <th>Transferorsales</th>
-                <td>{{ document.transferOrSales }}</td>
-            </tr>
-            <tr>
-                <th>Ueconformity</th>
-                <td>{% if document.ueConformity %}{{ document.ueConformity|join(', ') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Quitus</th>
-                <td>{{ document.quitus }}</td>
-            </tr>
-            <tr>
-                <th>Carregistration</th>
-                <td>{% if document.carRegistration %}{{ document.carRegistration|join(', ') }}{% endif %}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ document.status }}</td>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <td>{{ document.id }}</td>
+        </tr>
+        <tr>
+            <th>Civility</th>
+            <td>{{ document.civility }}</td>
+        </tr>
+        <tr>
+            <th>Lastname</th>
+            <td>{{ document.lastName }}</td>
+        </tr>
+        <tr>
+            <th>Firstname</th>
+            <td>{{ document.firstName }}</td>
+        </tr>
+        <tr>
+            <th>Phonenumber</th>
+            <td>{{ document.phoneNumber }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ document.email }}</td>
+        </tr>
+        {% if document.price is not null %}
+        <tr>
+            <th>Price</th>
+            <td>{{ document.price }}</td>
+        </tr>
+        {% endif %}
+        <tr>
+            <th>Type</th>
+            <td>{{ document.type }}</td>
+        </tr>
+        {% if document.licenseDriver is not null %}
+        <tr>
+            <th>Licensedriver</th>
+            <td>{% if document.licenseDriver %}{{ document.licenseDriver|join(', ') }}{% endif %}</td>
+        </tr>
+        {% endif %}
+        {% if document.idCard is not null %}
+        <tr>
+            <th>Idcard</th>
+            <td>{% if document.idCard %}{{ document.idCard|join(', ') }}{% endif %}</td>
+        </tr>
+        {% endif %}
+        {% if document.controlT is not null %}
+        <tr>
+            <th>Controlt</th>
+            <td>{{ document.controlT }}</td>
+        </tr>
+        {% endif %}
+        {% if document.immatRequest is not null %}
+        <tr>
+            <th>Immatrequest</th>
+            <td>{{ document.immatRequest }}</td>
+        </tr>
+        {% endif %}
+        {% if document.mandat is not null %}
+        <tr>
+            <th>Mandat</th>
+            <td>{{ document.mandat }}</td>
+        </tr>
+        {% endif %}
+        {% if document.domJustify is not null %}
+        <tr>
+            <th>Domjustify</th>
+            <td>{% if document.domJustify %}{{ document.domJustify|join(', ') }}{% endif %}</td>
+        </tr>
+        {% endif %}
+        {% if document.insuranceCertificate is not null %}
+        <tr>
+            <th>Insurancecertificate</th>
+            <td>{{ document.insuranceCertificate }}</td>
+        </tr>
+        {% endif %}
+        {% if document.transferOrSales is not null %}
+        <tr>
+            <th>Transferorsales</th>
+            <td>{{ document.transferOrSales }}</td>
+        </tr>
+        {% endif %}
+        {% if document.ueConformity is not null %}
+        <tr>
+            <th>Ueconformity</th>
+            <td>{% if document.ueConformity %}{{ document.ueConformity|join(', ') }}{% endif %}</td>
+        </tr>
+        {% endif %}
+        {% if document.quitus is not null %}
+        <tr>
+            <th>Quitus</th>
+            <td>{{ document.quitus }}</td>
+        </tr>
+        {% endif %}
+        <tr>
+            <th>Carregistration</th>
+            <td>{% if document.carRegistration %}{{ document.carRegistration|join(', ') }}{% endif %}</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td> {% if document.status == 0 %}
+                    En Attente
+                {% elseif document.status == 1 %}
+                    En cour de traitement
+                {% elseif document.status == 2 %}
+                    Validé
+                {% endif %}</td>
+        </tr>
         </tbody>
     </table>
 
-    <ul>
-        <li>
-            <a href="{{ path('document_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('document_edit', { 'id': document.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+            <a href="{{ path('document_download', {'id': document.id}) }}" class="btn btn-primary">Télécharger les documents</a>
+            <a href="{{ path('list') }}">Back to the list</a>
+
+    </div>
 {% endblock %}

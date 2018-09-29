@@ -1,0 +1,12 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_host: rlnegocesmryad.mysql.db
+    database_port: null
+    database_name: rlnegocesmryad
+    database_user: rlnegocesmryad
+    database_password: Rlnegoceauto59
+    mailer_transport: mail
+    mailer_host: smtp.gmail.com
+    mailer_user: b0ndurant591@gmail.com
+    mailer_password: 
+    secret: ThisTokenIsNotSoSecretChangeIt

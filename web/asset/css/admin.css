@@ -154,3 +154,20 @@ body {
 .navbar-inverse .navbar-nav>.log-out>.color-logout {
     color: #18d26e;
 }
+
+/*------- Message Flash ---------*/
+
+.position-fixed {
+    position: fixed;
+    z-index: 5;
+    margin: 50px 40px 0 0;
+    right: 0;
+}
+
+.alert-custom {
+    min-width: 250px;
+    max-width: 450px;
+    max-height: 450px;
+}
+
+/*----- END Message Flash -------*/

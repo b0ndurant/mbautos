@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Document;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +26,35 @@ class AdminController extends Controller
         return $this->render('default/indexAdmin.html.twig');
     }
 
+    /**
+     * @Route("admin/liste", name="list")
+     */
+    public function listAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $documents = $em->getRepository(Document::class)->findAll();
+        // replace this example code with whatever you need
+        return $this->render('document/index.html.twig', [
+            'documents' => $documents,
+        ]);
+    }
+
+    /**
+     * Finds and displays a article entity.
+     *
+     * @Route("admin/liste/{id}", name="document_show")
+     * @Method("GET")
+     * @param Document $document
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showAction(Document $document)
+    {
+
+        return $this->render('document/show.html.twig', array(
+            'document' => $document,
+        ));
+    }
+
 
     /**
      * @Route("/down/{id}", methods={"GET"}, name="document_download")
@@ -33,28 +63,54 @@ class AdminController extends Controller
      */
     public function DownloadAction(Document $document)
     {
-        $zip = new \ZipArchive();
-        $zip->open($this->getParameter('targetDirectory').'/'.$document->getName().'.zip', \ZipArchive::CREATE);
-        $dir = scandir($this->getParameter('targetDirectory').'/'.$document->getName());
-        unset($dir[0],$dir[1]);
-        foreach ($dir as $file) {
-            $zip->addFile($this->getParameter('targetDirectory').'/'.$document->getName().'/'.$file, $file);
-        }
-        $zip->close();
+        $directory = $this->getParameter('targetDirectory').'/'.$document->getName();
+        if (is_dir($directory)) {
+            $zip = new \ZipArchive();
+            $zip->open($directory . '.zip', \ZipArchive::CREATE);
+            $dir = scandir($directory);
+            unset($dir[0], $dir[1]);
+            foreach ($dir as $file) {
+                $zip->addFile($directory . '/' . $file, $file);
+            }
+            $zip->close();
 
-        // Generate response
-        $response = new Response();
+            // Generate response
+            $response = new Response();
 
 // Set headers
-        $response->headers->set('Cache-Control', 'private');
-        $response->headers->set('Content-type', 'application/force-download');
-        $response->headers->set('Content-Disposition', 'attachment; filename="test.zip";');
-        $response->headers->set('Content-length', filesize($this->getParameter('targetDirectory').'/'.$document->getName().'.zip'));
+            $response->headers->set('Cache-Control', 'private');
+            $response->headers->set('Content-type', 'application/force-download');
+            $response->headers->set('Content-Disposition', 'attachment; filename='.$document->getName().'".zip";');
+            $response->headers->set('Content-length', filesize($this->getParameter('targetDirectory') . '/' . $document->getName() . '.zip'));
 
 // Send headers before outputting anything
-        $response->sendHeaders();
-        $response->setContent(file_get_contents($this->getParameter('targetDirectory').'/'.$document->getName().'.zip'));
-        unlink($this->getParameter('targetDirectory').'/'.$document->getName().'.zip');
-        return $response;
+            $response->sendHeaders();
+            $response->setContent(file_get_contents($this->getParameter('targetDirectory') . '/' . $document->getName() . '.zip'));
+            unlink($this->getParameter('targetDirectory') . '/' . $document->getName() . '.zip');
+            return $response;
+        }
+        $this->addFlash('danger', 'Cette demande ne contient aucun documents');
+        return $this->redirectToRoute('document_show', ['id' => $document->getId()]);
+    }
+
+    /**
+     * @param Document $document
+     * @param int $status
+     * 
+     * @Route("/{id}/{status}", methods={"GET"}, name="document_status")
+     * 
+     * @return Response A Response Instance
+     */
+    public function statusAction(Document $document, $status)
+    {
+        if ($status >= 0 && $status <= 2) {
+            $document->setStatus($status);
+
+            $this->getDoctrine()->getManager()->persist($document);
+            $this->getDoctrine()->getManager()->flush();
+        }
+        return $this->redirectToRoute(
+            'list'
+        );
     }
 }

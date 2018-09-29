@@ -40,6 +40,7 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li><a href="{{ path('list') }}">Liste des demande de documents</a></li>
                     <li><a href="{{ path('fos_user_profile_edit') }}">Mon compte</a></li>
                     <li><a href="{{ path('homepage') }}">Retourner sur le site web</a></li>
 
@@ -59,6 +60,20 @@
         </div>
     </nav>
 {% endblock %}
+
+<!-- Display all flash message -->
+{% if app.flashes is defined %}
+    <div class="position-fixed">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }} fade in alert-custom">
+                    {{ message|raw }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endif %}
 
 {% block body %}
 {% endblock %}
