@@ -95,7 +95,8 @@ class DefaultController extends Controller
 
             $mailerService->sendEmail($document->getEmail(),
                 $this->getParameter('mailer_user'), $document->getType(),
-                $document, 'email/notification.html.twig'
+                $document->getType(), 'email/notification.html.twig',
+                $document->getName(), $document->getPhoneNumber()
             );
             $this->addFlash("success", "Votre demande a bien été envoyé.");
 
@@ -181,7 +182,8 @@ class DefaultController extends Controller
 
             $mailerService->sendEmail($document->getEmail(),
                 $this->getParameter('mailer_user'), $document->getType(),
-                $document, 'email/notification.html.twig'
+                $document->getType(), 'email/notification.html.twig',
+                $document->getName(), $document->getPhoneNumber()
             );
             $this->addFlash("success", "Votre demande a bien été envoyé.");
 
@@ -239,7 +241,8 @@ class DefaultController extends Controller
 
             $mailerService->sendEmail($document->getEmail(),
                 $this->getParameter('mailer_user'), $document->getType(),
-                $document, 'email/notification.html.twig'
+                $document->getType(), 'email/notification.html.twig',
+                $document->getName(), $document->getPhoneNumber()
             );
             $this->addFlash("success", "Votre demande a bien été envoyé.");
 
@@ -305,7 +308,8 @@ class DefaultController extends Controller
 
             $mailerService->sendEmail($document->getEmail(),
                 $this->getParameter('mailer_user'), $document->getType(),
-                $document, 'email/notification.html.twig'
+                $document->getType(), 'email/notification.html.twig',
+                $document->getName(), $document->getPhoneNumber()
             );
             $this->addFlash("success", "Votre demande a bien été envoyé.");
 
@@ -351,7 +355,8 @@ class DefaultController extends Controller
 
             $mailerService->sendEmail($document->getEmail(),
                 $this->getParameter('mailer_user'), $document->getType(),
-                $document, 'email/notification.html.twig'
+                $document->getType(), 'email/notification.html.twig',
+                $document->getName(), $document->getPhoneNumber()
             );
             $this->addFlash("success", "Votre message a bien été envoyé.");
 
@@ -363,67 +368,95 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/payer/{priceToken}", name="payer")
+     * @param $priceToken
+     *
+     * @Route("/payer/{priceToken}", methods={"GET"}, name="payment")
+     *
+     * @return Response A Response Instance
      */
     public function paymentAction($priceToken)
     {
         $document = $this->getDoctrine()->getRepository(
             Document::class)->findOneBy(['priceToken' => $priceToken]);
-        // replace this example code with whatever you need
-        return $this->render('payment/index.html.twig',
-            [
-                'amount' => $document->getPrice()*100,
-                'test' => $document->getPriceToken(),
-                'description' => $document->getType(),
-            ]);
+
+        if ($document) {
+            return $this->render('payment/index.html.twig',
+                [
+                    'amount' => $document->getPrice()*100,
+                    'priceToken' => $document->getPriceToken(),
+                    'description' => $document->getType(),
+                ]);
+        } else {
+            $this->addFlash('danger', 'La commande n\'existe pas');
+
+            return $this->redirectToRoute('homepage');
+        }
     }
 
 
     /**
-     *Truncate historical table
+     * method payment stripe
      *
      * @param Request $request
      * @param $priceToken
      * @param MailerService $mailerService
      *
-     * @Route("/paiement/{priceToken}", name="payment")
+     * @Route("/paiement/{priceToken}", methods={"GET", "POST"}, name="stripeIPN")
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return Response A Response Instance
      *
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      *
      */
-    public function truncateAction(Request $request, $priceToken, MailerService $mailerService)
+    public function stripeAction(Request $request, $priceToken, MailerService $mailerService)
     {
         $document = $this->getDoctrine()->getRepository(
             Document::class)->findOneBy(['priceToken' => $priceToken]);
-        // Set your secret key: remember to change this to your live secret key in production
-        // See your keys here: https://dashboard.stripe.com/account/apikeys
-        Stripe::setApiKey($this->getParameter('stripe_api_key'));
+        if ($document) {
+            // Set your secret key: remember to change this to your live secret key in production
+            // See your keys here: https://dashboard.stripe.com/account/apikeys
+            Stripe::setApiKey($this->getParameter('stripe_api_key'));
 
-        // Token is created using Checkout or Elements!
-        // Get the payment token ID submitted by the form:
-        $token = $request->request->get('stripeToken');
+            // Token is created using Checkout or Elements!
+            // Get the payment token ID submitted by the form:
+            $token = $request->request->get('stripeToken');
 
-        $charge = \Stripe\Charge::create([
-            'amount' => $document->getPrice()*100,
-            'currency' => 'eur',
-            'description' => $document->getType(),
-            "source" => $token,
-        ]);
-        $mailerService->sendEmail(
-            $document->getEmail(),$this->getParameter('mailer_user'),
-            'paiement de la commande'.$document->getType(),
-            $document, 'email/payment.html.twig'
-        );
-        $this->addFlash('success', 'Votre paiement a bien été pris en compte,
+            \Stripe\Charge::create([
+                'amount' => $document->getPrice() * 100,
+                'currency' => 'eur',
+                'description' => $document->getType(),
+                "source" => $token,
+            ]);
+
+            $mailerService->sendEmail(
+                $document->getEmail(), $this->getParameter('mailer_user'),
+                'paiement de la commande' . $document->getType(),
+                'Un paiement a été éfféctué d\'un montant de <strong>' .
+                $document->getPrice() . '</strong> de la part de <strong>' .
+                $document->getName() . '</strong> pour la demande de <strong>' . $document->getType() . '</strong>'
+                , 'email/payment.html.twig'
+            );
+
+            $mailerService->sendEmail(
+                $this->getParameter('mailer_user'), $document->getEmail(),
+                'paiement de la commande' . $document->getType(),
+                'Bonjour ' . $document->getName() .
+                '<br><br> Le paiement pour la demande de <strong>' . $document->getType() .
+                '</strong> d\'un montant de <strong>' . $document->getPrice() . '</strong> a été effectué'
+                , 'email/payment.html.twig'
+            );
+
+            $this->addFlash('success', 'Votre paiement a bien été pris en compte,
         un email vous a été envoyé');
-        $document->setPriceToken(null);
-        $this->getDoctrine()->getManager()->persist($document);
-        $this->getDoctrine()->getManager()->flush();
 
+            $document->setPriceToken(null);
+            $this->getDoctrine()->getManager()->persist($document);
+            $this->getDoctrine()->getManager()->flush();
+        } else {
+            $this->addFlash('danger', 'La commande n\'existe pas');
+        }
         return $this->redirectToRoute('homepage');
 
     }
