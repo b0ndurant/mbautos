@@ -32,7 +32,7 @@ class AdminController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $documents = $em->getRepository(Document::class)->findAll();
-        // replace this example code with whatever you need
+
         return $this->render('document/index.html.twig', [
             'documents' => $documents,
         ]);
@@ -175,8 +175,7 @@ class AdminController extends Controller
 
             $mailerService->sendEmail($this->getParameter('mailer_user'),
                 $document->getEmail(), $document->getType(),
-                $document->getPrice(),'email/send_price.html.twig',
-                $document->getName(), $url
+                $document,'email/send_price.html.twig', $url
             );
             $this->addFlash("success", "Votre message a bien été envoyé.");
 

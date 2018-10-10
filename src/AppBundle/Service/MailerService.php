@@ -41,8 +41,6 @@ class MailerService
      * @param string $subject Email's subject
      * @param string $message Email's body
      * @param string $mailView
-     * @param string $name
-     * @param null|string $phoneNumber Variable client phone number
      * @param null|string $url
      *
      * @return int The number of successful recipients.
@@ -53,7 +51,7 @@ class MailerService
      * @throws \Twig_Error_Syntax
      */
     public function sendEmail($fromEmail, $toEmail,
-        $subject, $message, $mailView, $name, $url = null, $phoneNumber = null
+        $subject, $message, $mailView, $url = null
     ) {
         $message = \Swift_Message::newInstance()
             ->setFrom($fromEmail)
@@ -64,10 +62,6 @@ class MailerService
                 $this->templating->render(
                     $mailView,
                     array(
-                        'subject' => $subject,
-                        'name' => $name,
-                        'email' => $fromEmail,
-                        'phoneNumber' => $phoneNumber,
                         'message' => $message,
                         'priceUrl' => $url
                     )

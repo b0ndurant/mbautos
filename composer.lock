@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "06b6ebb6362e294984ee5bc351631177",
+    "content-hash": "e4a1a439bbdd2b2c4e810a964d91ba70",
     "packages": [
         {
             "name": "calcinai/php-imagick",

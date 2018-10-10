@@ -83,14 +83,14 @@
     font-weight: normal; text-align: left; font-family: Helvetica, Arial,
     sans-serif; line-height: 24px; vertical-align: top; padding-top:10px;padding-bottom:10px;padding-right:10px;padding-left:10px;">
 
-                                    <strong>De : {{ name }}</strong><br>
-                                    <strong>Mail : {{ email }}</strong><br>
+                                    <strong>De : {{ document.name }}</strong><br>
+                                    <strong>Mail : {{ document.email }}</strong><br>
                                     <strong>Message :</strong><br><br>
                                 </td>
                             </tr>
                             <tr>
                                 <td width="590" class="cell-content left" style="font-family:Helvetica, Arial, sans-serif;padding-top:10px;padding-bottom:10px;padding-right:10px;padding-left:10px;line-height:24px;font-size:15px;font-style:italic;color:dimgrey;">
-                                    Le montant de votre demande de {{ subject }} est de {{ message }}.
+                                    Le montant de votre demande de {{ document.type }} est de {{ document.price }}.
                                     <br>
                                     Pour régler votre commande en ligne sur notre site, veuillez vous rendre à l'adresse ci-dessous
                                     <br>
