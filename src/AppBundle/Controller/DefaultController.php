@@ -9,6 +9,7 @@ use AppBundle\Form\CarRegistrationUEType;
 use AppBundle\Form\PlateType;
 use AppBundle\Form\QuitusType;
 use AppBundle\Service\FileUploaderService;
+use Stripe\Stripe;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -339,6 +340,38 @@ class DefaultController extends Controller
                 'text/html'
             );
         return $this->get('mailer')->send($message);
+    }
+
+
+    /**
+     *Truncate historical table
+     *
+     * @param Request $request
+     * @param Document $document
+     *
+     * @Route("/{token}/paiement", name="paiement", methods={"GET"})
+     *
+     * @return Response
+     */
+    public function truncateAction(Request $request, Document $document)
+    {
+        // Set your secret key: remember to change this to your live secret key in production
+// See your keys here: https://dashboard.stripe.com/account/apikeys
+        Stripe::setApiKey("sk_test_xxeTVdIohl7POMWMgwTQd3ND");
+
+// Token is created using Checkout or Elements!
+// Get the payment token ID submitted by the form:
+        $token = $request->request->get('stripeToken');
+
+        $charge = \Stripe\Charge::create([
+            'amount' => $document->getPrice(),
+            'currency' => 'eur',
+            'description' => 'test paiement',
+            "source" => "$token",
+        ]);
+
+        return $this->render('default/index.html.twig');
+
     }
 
 }
