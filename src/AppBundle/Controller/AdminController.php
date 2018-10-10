@@ -10,6 +10,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Document;
 use AppBundle\Form\PriceType;
+use AppBundle\Service\FileUploaderService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,6 +55,25 @@ class AdminController extends Controller
         return $this->render('document/show.html.twig', array(
             'document' => $document,
         ));
+    }
+
+    /**
+     * Deletes a email entity.
+     *
+     * @param Document $document Deleting customer
+     *
+     * @Route("admin/liste/delete/{id}", name="document_delete")
+     * @Method("GET")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteAction(Document $document, FileUploaderService $fileUploaderService)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $fileUploaderService->deletePdf($document->getName());
+        $em->remove($document);
+        $em->flush();
+
+        return $this->redirectToRoute('list');
     }
 
 

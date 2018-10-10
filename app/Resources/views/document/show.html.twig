@@ -7,23 +7,19 @@
     <table>
         <tbody>
         <tr>
-            <th>Id</th>
-            <td>{{ document.id }}</td>
-        </tr>
-        <tr>
-            <th>Civility</th>
+            <th>Civilité</th>
             <td>{{ document.civility }}</td>
         </tr>
         <tr>
-            <th>Lastname</th>
+            <th>Nom</th>
             <td>{{ document.lastName }}</td>
         </tr>
         <tr>
-            <th>Firstname</th>
+            <th>Prénom</th>
             <td>{{ document.firstName }}</td>
         </tr>
         <tr>
-            <th>Phonenumber</th>
+            <th>Téléphone</th>
             <td>{{ document.phoneNumber }}</td>
         </tr>
         <tr>
@@ -32,17 +28,17 @@
         </tr>
         {% if document.price is not null %}
         <tr>
-            <th>Price</th>
+            <th>Prix</th>
             <td>{{ document.price }}</td>
         </tr>
         {% endif %}
         <tr>
-            <th>Type</th>
+            <th>Type de document</th>
             <td>{{ document.type }}</td>
         </tr>
         {% if document.licenseDriver is not null %}
         <tr>
-            <th>Licensedriver</th>
+            <th>Permis de conduire</th>
             <td>{% if document.licenseDriver %}{{ document.licenseDriver|join(', ') }}{% endif %}</td>
         </tr>
         {% endif %}

@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Document
@@ -44,6 +45,7 @@ class Document
 
     /**
      * @var string
+     * @Assert\Regex(pattern="/^(0|\+33)[1-9]([-. ]?[0-9]{2}){4}$/", message="numéro invalide")
      *
      * @ORM\Column(name="PhoneNumber", type="string", length=16)
      */
@@ -51,7 +53,6 @@ class Document
 
     /**
      * @var string
-     *
      * @ORM\Column(name="Email", type="string", length=64)
      */
     private $email;
@@ -161,9 +162,33 @@ class Document
      */
     private $status;
 
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="datetime")
+     */
+    private $date;
+
+    /**
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param \DateTime $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+    }
+
     public function __construct()
     {
         $this->setStatus(0);
+        $this->setDate(new \DateTime('now'));
     }
 
     public function getName()

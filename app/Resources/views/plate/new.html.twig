@@ -3,8 +3,41 @@
 {% block body %}
     <div style="margin-top: 80px"></div>
     {{ form_start(form) }}
-    {{ form_errors(form) }}
-    {{ form_widget(form) }}
-    <button type="submit">Envoyer</button>
+    <div>
+        {{ form_widget(form.civility) }}
+        {{ form_errors(form.civility) }}
+    </div>
+    <div>
+        {{ form_widget(form.lastName) }}
+        {{ form_errors(form.lastName) }}
+    </div>
+    <div>
+        {{ form_widget(form.firstName) }}
+        {{ form_errors(form.firstName) }}
+    </div>
+    <div>
+        {{ form_widget(form.phoneNumber) }}
+        {{ form_errors(form.phoneNumber) }}
+    </div>
+    <div>
+        {{ form_widget(form.email) }}
+        {{ form_errors(form.email) }}
+    </div>
+    <div>
+        {{ form_widget(form.carRegistration) }}
+        {{ form_errors(form.carRegistration) }}
+    </div>
+    <div>
+        <button type="submit">Envoyer</button>
+    </div>
     {{ form_end(form) }}
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('asset/js/jquery/jquery.min.js') }}"></script>
+
+    <script>
+        $(document).ready(function(){
+            $('.custom-input-class').simpleFileInput();
+        });
+    </script>
 {% endblock %}

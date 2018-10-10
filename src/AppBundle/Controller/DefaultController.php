@@ -194,7 +194,6 @@ class DefaultController extends Controller
             }
             $document->setIdCard($idCard);
 
-
             $mandat = $fileUploaderService->upload($document->getMandat(),$document->getName());
             $document->setMandat($mandat);
 

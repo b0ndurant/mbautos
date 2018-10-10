@@ -4,8 +4,44 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "64c9c5dd609a13757ebc4ccc631db432",
+    "content-hash": "ee9bd88826c6a3f82f158bc337f9fcdc",
     "packages": [
+        {
+            "name": "calcinai/php-imagick",
+            "version": "v0.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/calcinai/php-imagick.git",
+                "reference": "001530b19560b9862ffe78c3ae29ad5dc2549e6d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/calcinai/php-imagick/zipball/001530b19560b9862ffe78c3ae29ad5dc2549e6d",
+                "reference": "001530b19560b9862ffe78c3ae29ad5dc2549e6d",
+                "shasum": ""
+            },
+            "suggest": {
+                "ext-imagick": "Native extension"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Imagick": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Calcinai",
+                    "email": "michael@calcin.ai"
+                }
+            ],
+            "description": "PHP wrapper for command line ImageMagick utils compatible with PECL::Imagick",
+            "time": "2016-12-22T15:09:47+00:00"
+        },
         {
             "name": "composer/ca-bundle",
             "version": "1.1.2",
@@ -1399,6 +1435,57 @@
                 "psr-3"
             ],
             "time": "2017-06-19T01:22:40+00:00"
+        },
+        {
+            "name": "orbitale/imagemagick-php",
+            "version": "v2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Orbitale/ImageMagickPHP.git",
+                "reference": "b88c2a861d8a52372de246ed9997f8784d756b5b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Orbitale/ImageMagickPHP/zipball/b88c2a861d8a52372de246ed9997f8784d756b5b",
+                "reference": "b88c2a861d8a52372de246ed9997f8784d756b5b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1",
+                "symfony/filesystem": "^3.0|^4.0",
+                "symfony/process": "^3.0|^4.0",
+                "symfony/yaml": "^3.0|^4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Orbitale\\Component\\ImageMagick\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alex Rock Ancelet",
+                    "email": "alex@orbitale.io",
+                    "homepage": "http://www.orbitale.io/"
+                }
+            ],
+            "description": "A system that allows creating commands to send to the exec() function to use ImageMagick's powerful features.",
+            "homepage": "https://github.com/Orbitale/ImageMagickPHP",
+            "keywords": [
+                "ImageMagick",
+                "converter",
+                "gd",
+                "image",
+                "imagick"
+            ],
+            "time": "2018-02-09T09:40:12+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -2903,8 +2990,8 @@
     "prefer-lowest": false,
     "platform": {
         "php": ">=5.5.9",
-        "ext-zip": "*",
-        "ext-fileinfo": "*"
+        "ext-fileinfo": "*",
+        "ext-zip": "*"
     },
     "platform-dev": []
 }

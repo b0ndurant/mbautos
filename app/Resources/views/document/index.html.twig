@@ -11,20 +11,22 @@
         <table id="table_id">
             <thead>
             <tr>
-                <th>Civility</th>
-                <th>Lastname</th>
-                <th>Firstname</th>
-                <th>Phonenumber</th>
+                <th>Date</th>
+                <th>Civilité</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Téléphone</th>
                 <th>Email</th>
-                <th>Price</th>
-                <th>Type</th>
-                <th>Status</th>
+                <th>Prix</th>
+                <th>Type de document</th>
+                <th>Statut</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
             {% for document in documents %}
                 <tr>
+                    <td>{{ document.date|date('d/m/y à H:i') }}</td>
                     <td>{{ document.civility }}</td>
                     <td>{{ document.lastName }}</td>
                     <td>{{ document.firstName }}</td>
@@ -35,23 +37,24 @@
                     {% else %}
                         <td>{{ document.price }} €</td>
                     {% endif %}
-                    <td>{{ document.type }} €</td>
+                    <td>{{ document.type }}</td>
                     <td>
                         {% if document.status == 0 %}
                             <a href="{{ path('document_status', {'id': document.id, 'status': 1}) }}"
-                               class="button button-grey text-center">En Attente</a>
+                               class="btn btn-warning text-center">En Attente</a>
                         {% elseif document.status == 1 %}
                             <a href="{{ path('document_status', {'id': document.id, 'status': 2}) }}"
-                               class="button button-yellow text-center">En cour de traitement</a>
+                               class="btn btn-info text-center">En cour de traitement</a>
                         {% elseif document.status == 2 %}
                             <a href="{{ path('document_status', {'id': document.id, 'status': 0}) }}"
-                               class="button button-green text-center">Validé</a>
+                               class="btn btn-success text-center">Validé</a>
                         {% endif %}
                     </td>
                     <td>
                         <a href="#" class="fas fa-euro-sign" style="font-size: 20px; color: #999999" data-toggle="modal" data-target="#pop-up-price-document-{{ document.id }}" title="Modifier le montant demandé">€</a>
                         {{ render(controller("AppBundle:Admin:price", {'document': document})) }}
-                        <a href="{{ path('document_show', { 'id': document.id }) }}">voir</a>
+                        <a href="{{ path('document_show', { 'id': document.id }) }}" title="voir"><i class="fa fa-eye"></i></a>
+                        <a href="{{ path('document_delete', { 'id': document.id }) }}" title="supprimer"><i class="fa fa-times-circle"></i></a>
                     </td>
                 </tr>
             {% endfor %}
