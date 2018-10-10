@@ -11,11 +11,13 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Document;
 use AppBundle\Form\PriceType;
 use AppBundle\Service\FileUploaderService;
+use AppBundle\Service\MailerService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class AdminController extends Controller
 {
@@ -140,16 +142,15 @@ class AdminController extends Controller
      *
      * @param Request $request New posted info
      * @param Document $document The contract entity
+     * @param MailerService $mailerService
      *
-     * @throws \Exception
-     *
-     * @Route("/{document}/price",
-     *     methods={"POST"}, name="price")
+     * @Route("/{document}/price", methods={"POST"}, name="price")
      *
      * @return Response
      *
+     * @throws \Exception
      */
-    public function priceAction(Request $request, Document $document)
+    public function priceAction(Request $request, Document $document, MailerService $mailerService)
     {
         $form = $this->createForm(PriceType::class);
         $form->handleRequest($request);
@@ -164,7 +165,15 @@ class AdminController extends Controller
             $this->getDoctrine()->getManager()->persist($document);
             $this->getDoctrine()->getManager()->flush();
 
-            $url = $this->generateUrl('paiement', array('token' => $token));
+            $url = $this->generateUrl('payment',
+                array('priceToken' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
+
+            $mailerService->sendEmail($this->getParameter('mailer_user'),
+                $document->getEmail(), $document->getType(),
+                $document->getPrice(),'email/send_price.html.twig',
+                $document->getName(), $url
+            );
+            $this->addFlash("success", "Votre message a bien été envoyé.");
 
             return $this->redirectToRoute('list');
         }

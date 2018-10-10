@@ -10,6 +10,9 @@ parameters:
     targetDirectory: '%kernel.project_dir%/web/uploads'
 
 framework:
+    templating:
+        engines:
+            twig
     #esi: ~
     translator: { fallbacks: ['%locale%'] }
     secret: '%secret%'
@@ -66,6 +69,7 @@ swiftmailer:
     host: '%mailer_host%'
     username: '%mailer_user%'
     password: '%mailer_password%'
+    encryption: ssl
     spool: { type: memory }
 
 sensio_framework_extra:

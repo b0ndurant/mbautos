@@ -9,6 +9,7 @@ use AppBundle\Form\CarRegistrationUEType;
 use AppBundle\Form\PlateType;
 use AppBundle\Form\QuitusType;
 use AppBundle\Service\FileUploaderService;
+use AppBundle\Service\MailerService;
 use Stripe\Stripe;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +21,7 @@ class DefaultController extends Controller
     /**
      * @Route("/", name="homepage")
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         // replace this example code with whatever you need
         return $this->render('default/index.html.twig', [
@@ -29,13 +30,19 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param Request             $request             Edit posted info
+     * @param Request $request Edit posted info
      * @param FileUploaderService $fileUploaderService Uploader Service
+     * @param MailerService $mailerService
      *
      * @Route("/cartegrise_fr", methods={"GET", "POST"}, name="carRegistrationFR")
+     *
      * @return              Response A Response instance
+     *
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
-    public function newCarRegistrationFRAction(Request $request, FileUploaderService $fileUploaderService)
+    public function newCarRegistrationFRAction(Request $request, FileUploaderService $fileUploaderService, MailerService $mailerService)
     {   $document = new Document();
         $form = $this->createForm(CarRegistrationFRType::class, $document);
         $form->handleRequest($request);
@@ -86,7 +93,11 @@ class DefaultController extends Controller
             $this->getDoctrine()->getManager()->persist($document);
             $this->getDoctrine()->getManager()->flush();
 
-            $this->_sendEmail($form->getData());
+            $mailerService->sendEmail($document->getEmail(),
+                $this->getParameter('mailer_user'), $document->getType(),
+                $document->getType(), 'email/notification.html.twig',
+                $document->getName(), $document->getPhoneNumber()
+            );
             $this->addFlash("success", "Votre demande a bien été envoyé.");
 
             return $this->redirectToRoute('carRegistrationFR');
@@ -97,13 +108,19 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param Request             $request             Edit posted info
+     * @param Request $request Edit posted info
      * @param FileUploaderService $fileUploaderService Uploader Service
+     * @param MailerService $mailerService
      *
      * @Route("/cartegrise_ue", methods={"GET", "POST"}, name="carRegistrationUE")
+     *
      * @return              Response A Response instance
+     *
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
-    public function newCarRegistrationUEAction(Request $request, FileUploaderService $fileUploaderService)
+    public function newCarRegistrationUEAction(Request $request, FileUploaderService $fileUploaderService, MailerService $mailerService)
     {   $document = new Document();
         $form = $this->createForm(CarRegistrationUEType::class, $document);
         $form->handleRequest($request);
@@ -163,7 +180,11 @@ class DefaultController extends Controller
             $this->getDoctrine()->getManager()->persist($document);
             $this->getDoctrine()->getManager()->flush();
 
-            $this->_sendEmail($form->getData());
+            $mailerService->sendEmail($document->getEmail(),
+                $this->getParameter('mailer_user'), $document->getType(),
+                $document->getType(), 'email/notification.html.twig',
+                $document->getName(), $document->getPhoneNumber()
+            );
             $this->addFlash("success", "Votre demande a bien été envoyé.");
 
             return $this->redirectToRoute('carRegistrationUE');
@@ -174,13 +195,19 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param Request             $request             Edit posted info
+     * @param Request $request Edit posted info
      * @param FileUploaderService $fileUploaderService Uploader Service
+     * @param MailerService $mailerService
      *
      * @Route("/changement_adresse", methods={"GET", "POST"}, name="adressChange")
+     *
      * @return              Response A Response instance
+     *
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
-    public function newAdressChangeAction(Request $request, FileUploaderService $fileUploaderService)
+    public function newAdressChangeAction(Request $request, FileUploaderService $fileUploaderService, MailerService $mailerService)
     {   $document = new Document();
         $form = $this->createForm(AdressChangeType::class, $document);
         $form->handleRequest($request);
@@ -212,7 +239,11 @@ class DefaultController extends Controller
             $this->getDoctrine()->getManager()->persist($document);
             $this->getDoctrine()->getManager()->flush();
 
-            $this->_sendEmail($form->getData());
+            $mailerService->sendEmail($document->getEmail(),
+                $this->getParameter('mailer_user'), $document->getType(),
+                $document->getType(), 'email/notification.html.twig',
+                $document->getName(), $document->getPhoneNumber()
+            );
             $this->addFlash("success", "Votre demande a bien été envoyé.");
 
             return $this->redirectToRoute('adressChange');
@@ -224,13 +255,19 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param Request             $request             Edit posted info
+     * @param Request $request Edit posted info
      * @param FileUploaderService $fileUploaderService Uploader Service
+     * @param MailerService $mailerService
      *
      * @Route("/quitus_fiscal", methods={"GET", "POST"}, name="quitus")
+     *
      * @return              Response A Response instance
+     *
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
-    public function newQuitusAction(Request $request, FileUploaderService $fileUploaderService)
+    public function newQuitusAction(Request $request, FileUploaderService $fileUploaderService, MailerService $mailerService)
     {   $document = new Document();
         $form = $this->createForm(QuitusType::class, $document);
         $form->handleRequest($request);
@@ -269,7 +306,11 @@ class DefaultController extends Controller
             $this->getDoctrine()->getManager()->persist($document);
             $this->getDoctrine()->getManager()->flush();
 
-            $this->_sendEmail($form->getData());
+            $mailerService->sendEmail($document->getEmail(),
+                $this->getParameter('mailer_user'), $document->getType(),
+                $document->getType(), 'email/notification.html.twig',
+                $document->getName(), $document->getPhoneNumber()
+            );
             $this->addFlash("success", "Votre demande a bien été envoyé.");
 
             return $this->redirectToRoute('quitus');
@@ -280,14 +321,23 @@ class DefaultController extends Controller
     }
 
     /**
-     * @param Request             $request             Edit posted info
+     * @param Request $request Edit posted info
      * @param FileUploaderService $fileUploaderService Uploader Service
+     * @param MailerService $mailerService
      *
      * @Route("/plaques_immatriculation", methods={"GET", "POST"}, name="plate")
-     * @return              Response A Response instance
+     *
+     * @return  Response A Response instance
+     *
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
-    public function newPlateAction(Request $request, FileUploaderService $fileUploaderService)
-    {   $document = new Document();
+    public function newPlateAction(
+        Request $request, FileUploaderService $fileUploaderService,
+        MailerService $mailerService
+    ) {
+        $document = new Document();
         $form = $this->createForm(PlateType::class, $document);
 
         $form->handleRequest($request);
@@ -303,7 +353,11 @@ class DefaultController extends Controller
             $this->getDoctrine()->getManager()->persist($document);
             $this->getDoctrine()->getManager()->flush();
 
-            $this->_sendEmail($form->getData());
+            $mailerService->sendEmail($document->getEmail(),
+                $this->getParameter('mailer_user'), $document->getType(),
+                $document->getType(), 'email/notification.html.twig',
+                $document->getName(), $document->getPhoneNumber()
+            );
             $this->addFlash("success", "Votre message a bien été envoyé.");
 
             return $this->redirectToRoute('plate');
@@ -313,65 +367,39 @@ class DefaultController extends Controller
         );
     }
 
-    /** Creates email function for send.
-     *
-     * $data function to send email
-     *
-     * @param Document $document
-     * @return string int array
-     */
-    private function _sendEmail(Document $document)
-    {
-        $message = \Swift_Message::newInstance()
-            ->setFrom($document->getEmail())
-            ->setCharset('UTF-8')
-            ->setTo($this->container->getParameter('mailer_user'))
-            ->setSubject('Demande de'.' '.$document->getType())
-            ->setBody(
-                $this->renderView(
-                    'email/registration.html.twig',
-                    [
-                        'name' => $document->getName(),
-                        'email' => $document->getEmail(),
-                        'telephone' => $document->getPhoneNumber(),
-                        'message' => $document->getType(),
-                    ]
-                ),
-                'text/html'
-            );
-        return $this->get('mailer')->send($message);
-    }
-
-
     /**
      *Truncate historical table
      *
      * @param Request $request
-     * @param Document $document
+     * @param $priceToken
      *
-     * @Route("/{token}/paiement", name="paiement", methods={"GET"})
+     * @Route("/paiement/{priceToken}", name="payment", methods={"GET"})
      *
-     * @return Response
+     * @return Response A Response Instance
      */
-    public function truncateAction(Request $request, Document $document)
+    public function truncateAction(Request $request, $priceToken)
     {
-        // Set your secret key: remember to change this to your live secret key in production
-// See your keys here: https://dashboard.stripe.com/account/apikeys
-        Stripe::setApiKey("sk_test_xxeTVdIohl7POMWMgwTQd3ND");
+        $document = $this->getDoctrine()->getRepository(
+            Document::class)->findOneBy(['priceToken' => $priceToken]);
 
-// Token is created using Checkout or Elements!
-// Get the payment token ID submitted by the form:
+        // Set your secret key: remember to change this to your live secret key in production
+        // See your keys here: https://dashboard.stripe.com/account/apikeys
+        Stripe::setApiKey($this->getParameter('stripe_api_key'));
+
+        // Token is created using Checkout or Elements!
+        // Get the payment token ID submitted by the form:
         $token = $request->request->get('stripeToken');
 
         $charge = \Stripe\Charge::create([
-            'amount' => $document->getPrice(),
+            'amount' => $document['price'],
             'currency' => 'eur',
-            'description' => 'test paiement',
+            'description' => $document['type'],
             "source" => "$token",
         ]);
 
-        return $this->render('default/index.html.twig');
+        return $this->render('payment/index.html.twig',
+            ['document' => $document]
+        );
 
     }
-
 }
