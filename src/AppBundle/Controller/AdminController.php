@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: b0ndurant
- * Date: 26/09/18
- * Time: 18:40
- */
 
 namespace AppBundle\Controller;
 
@@ -12,28 +6,29 @@ use AppBundle\Entity\Document;
 use AppBundle\Form\PriceType;
 use AppBundle\Service\FileUploaderService;
 use AppBundle\Service\MailerService;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+/**
+ * @Route("admin")
+ */
 class AdminController extends Controller
 {
     /**
-     * @Route("admin/index", name="indexAdmin")
+     * @Route("/index", name="indexAdmin")
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
-        // replace this example code with whatever you need
         return $this->render('default/indexAdmin.html.twig');
     }
 
     /**
-     * @Route("admin/liste", name="list")
+     * @Route("/liste", name="list")
      */
-    public function listAction(Request $request)
+    public function listAction()
     {
         $em = $this->getDoctrine()->getManager();
         $documents = $em->getRepository(Document::class)->findAll();
@@ -46,27 +41,28 @@ class AdminController extends Controller
     /**
      * Finds and displays a article entity.
      *
-     * @Route("admin/liste/{id}", name="document_show")
-     * @Method("GET")
      * @param Document $document
+     *
+     * @Route("/liste/{id}", methods={"GET"}, name="document_show")
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showAction(Document $document)
     {
-
-        return $this->render('document/show.html.twig', array(
-            'document' => $document,
-        ));
+        return $this->render('document/show.html.twig',
+            ['document' => $document]
+        );
     }
 
     /**
      * Deletes a email entity.
      *
      * @param Document $document Deleting customer
+     * @param FileUploaderService $fileUploaderService
      *
-     * @Route("admin/liste/delete/{id}", name="document_delete")
-     * @Method("GET")
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Route("/liste/delete/{id}", methods={"GET"}, name="document_delete")
+     *
+     * @return Response A Response Instance
      */
     public function deleteAction(Document $document, FileUploaderService $fileUploaderService)
     {
@@ -80,9 +76,11 @@ class AdminController extends Controller
 
 
     /**
-     * @Route("/down/{id}", methods={"GET"}, name="document_download")
      * @param Document $document
-     * @return Response
+     *
+     * @Route("/down/{id}", methods={"GET"}, name="document_download")
+     *
+     * @return Response A Response Instance
      */
     public function DownloadAction(Document $document)
     {
@@ -100,16 +98,22 @@ class AdminController extends Controller
             // Generate response
             $response = new Response();
 
-// Set headers
+            // Set headers
             $response->headers->set('Cache-Control', 'private');
             $response->headers->set('Content-type', 'application/force-download');
-            $response->headers->set('Content-Disposition', 'attachment; filename='.$document->getName().'".zip";');
-            $response->headers->set('Content-length', filesize($this->getParameter('targetDirectory') . '/' . $document->getName() . '.zip'));
+            $response->headers->set('Content-Disposition',
+                'attachment; filename='.$document->getName().'".zip";');
+            $response->headers->set('Content-length', filesize(
+                $this->getParameter('targetDirectory') . '/' .
+                $document->getName() . '.zip'));
 
-// Send headers before outputting anything
+            // Send headers before outputting anything
             $response->sendHeaders();
-            $response->setContent(file_get_contents($this->getParameter('targetDirectory') . '/' . $document->getName() . '.zip'));
-            unlink($this->getParameter('targetDirectory') . '/' . $document->getName() . '.zip');
+            $response->setContent(file_get_contents(
+                $this->getParameter('targetDirectory') . '/' .
+                $document->getName() . '.zip'));
+            unlink($this->getParameter('targetDirectory') . '/' .
+                $document->getName() . '.zip');
             return $response;
         }
         $this->addFlash('danger', 'Cette demande ne contient aucun documents');
@@ -144,14 +148,15 @@ class AdminController extends Controller
      * @param Document $document The contract entity
      * @param MailerService $mailerService
      *
-     * @Route("/{document}/price", methods={"POST"}, name="price")
+     * @Route("/price/{document}", methods={"POST"}, name="price")
      *
      * @return Response
      *
      * @throws \Exception
      */
-    public function priceAction(Request $request, Document $document, MailerService $mailerService)
-    {
+    public function priceAction(
+        Request $request, Document $document, MailerService $mailerService
+    ) {
         $form = $this->createForm(PriceType::class);
         $form->handleRequest($request);
 
@@ -166,7 +171,7 @@ class AdminController extends Controller
             $this->getDoctrine()->getManager()->flush();
 
             $url = $this->generateUrl('payment',
-                array('priceToken' => $token), UrlGeneratorInterface::ABSOLUTE_URL);
+                ['priceToken' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
 
             $mailerService->sendEmail($this->getParameter('mailer_user'),
                 $document->getEmail(), $document->getType(),

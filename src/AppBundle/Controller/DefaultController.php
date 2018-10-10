@@ -23,10 +23,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-        ]);
+        return $this->render('default/index.html.twig');
     }
 
     /**
@@ -42,8 +39,11 @@ class DefaultController extends Controller
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function newCarRegistrationFRAction(Request $request, FileUploaderService $fileUploaderService, MailerService $mailerService)
-    {   $document = new Document();
+    public function newCarRegistrationFRAction(
+        Request $request, FileUploaderService $fileUploaderService,
+        MailerService $mailerService
+    ){
+        $document = new Document();
         $form = $this->createForm(CarRegistrationFRType::class, $document);
         $form->handleRequest($request);
 
@@ -368,6 +368,16 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/payer", name="payer")
+     */
+    public function paymentAction()
+    {
+        // replace this example code with whatever you need
+        return $this->render('payment/index.html.twig');
+    }
+
+
+    /**
      *Truncate historical table
      *
      * @param Request $request
@@ -391,10 +401,10 @@ class DefaultController extends Controller
         $token = $request->request->get('stripeToken');
 
         $charge = \Stripe\Charge::create([
-            'amount' => $document['price'],
+            'amount' => $document->getPrice(),
             'currency' => 'eur',
-            'description' => $document['type'],
-            "source" => "$token",
+            'description' => $document->getPrice(),
+            "source" => $token,
         ]);
 
         return $this->render('payment/index.html.twig',
